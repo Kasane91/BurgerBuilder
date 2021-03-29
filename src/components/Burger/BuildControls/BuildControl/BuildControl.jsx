@@ -57,7 +57,9 @@ const BuildControl = (props) => {
   return (
     <BuildControlDiv>
       <LabelDiv>{props.label}</LabelDiv>
-      <LessButton onClick={props.removed}>Less</LessButton>
+      <LessButton disabled={props.disabled} onClick={props.removed}>
+        Less
+      </LessButton>
       <MoreButton onClick={props.added}>More</MoreButton>
     </BuildControlDiv>
   );

@@ -23,6 +23,9 @@ const StyledDiv = styled.div`
 const BuildControls = (props) => {
   return (
     <StyledDiv>
+      <p>
+        Current Price: <strong>{props.totalPrice.toFixed(2)}</strong>{" "}
+      </p>
       {controls.map((control) => {
         return (
           <BuildControl
@@ -30,6 +33,7 @@ const BuildControls = (props) => {
             label={control.label}
             added={() => props.onAdd(control.type)}
             removed={() => props.onRemove(control.type)}
+            disabled={props.disabledInfo[control.type]}
           />
         );
       })}

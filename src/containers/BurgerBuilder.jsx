@@ -42,12 +42,22 @@ const BurgerBuilder = (props) => {
     }
   };
 
+  let disabledButtonInfo = { ...burger.ingredients };
+
+  for (let key in disabledButtonInfo) {
+    disabledButtonInfo[key] = disabledButtonInfo[key] <= 0;
+  }
+
+  console.log(disabledButtonInfo);
+
   return (
     <Fragment>
       <Burger ingredients={burger.ingredients} />
       <BuildControls
         onAdd={addIngredientHandler}
         onRemove={removeIngredientHandler}
+        disabledInfo={disabledButtonInfo}
+        totalPrice={totalPrice}
       />
     </Fragment>
   );
