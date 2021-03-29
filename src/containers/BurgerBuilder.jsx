@@ -35,7 +35,7 @@ const BurgerBuilder = (props) => {
     console.log(total);
   };
 
-  const updateOrderStatus = () => {
+  const purchaseOrder = () => {
     setCompleteOrder(true);
   };
 
@@ -90,7 +90,7 @@ const BurgerBuilder = (props) => {
         disabledInfo={disabledButtonInfo}
         totalPrice={totalPrice}
         isPurchasable={purchasable}
-        order={updateOrderStatus}
+        handlePurchaseOrder={purchaseOrder}
       />
     </Fragment>
   );

@@ -2,14 +2,6 @@ import React from "react";
 import BurgerIngredient from "./BurgerIngredient/BurgerIngredient";
 import styled from "styled-components";
 
-const StyledBurgerMeat = styled.div`
-  width: 80%;
-  height: 8%;
-  background: linear-gradient(#7f3608, #702e05);
-  margin: 2% auto;
-  border-radius: 15px;
-`;
-
 const StyledDiv = styled.div`
   width: 100%;
   margin: auto;
