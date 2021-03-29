@@ -36,9 +36,26 @@ const StyledDiv = styled.div`
 `;
 
 const Burger = (props) => {
+  let transformedIngredients = Object.keys(props.ingredients)
+    .map((ingredient) => {
+      return [...Array(props.ingredients[ingredient])].map((_, index) => {
+        return <BurgerIngredient key={ingredient + index} type={ingredient} />;
+      });
+    })
+    .reduce((arr, el) => {
+      console.log("arr" + arr);
+      return arr.concat(el);
+    }, []);
+  console.log(transformedIngredients);
+
+  if (transformedIngredients.length === 0) {
+    transformedIngredients = <p>Please start adding ingredients!</p>;
+  }
   return (
     <StyledDiv>
-      <BurgerIngredient type="meat"></BurgerIngredient>
+      <BurgerIngredient type="bread-top"></BurgerIngredient>
+      {transformedIngredients}
+      <BurgerIngredient type="bread-bottom"></BurgerIngredient>
     </StyledDiv>
   );
 };
