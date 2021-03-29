@@ -36,7 +36,11 @@ const BurgerBuilder = (props) => {
   };
 
   const updateOrderStatus = () => {
-    setCompleteOrder(!completeOrder);
+    setCompleteOrder(true);
+  };
+
+  const cancelOrder = () => {
+    setCompleteOrder(false);
   };
 
   const addIngredientHandler = (type) => {
@@ -77,7 +81,7 @@ const BurgerBuilder = (props) => {
   return (
     <Fragment>
       <Burger ingredients={burger.ingredients} />
-      <Modal show={completeOrder}>
+      <Modal show={completeOrder} handleCancelOrder={cancelOrder}>
         <OrderSummary ingredients={burger.ingredients} />
       </Modal>
       <BuildControls
