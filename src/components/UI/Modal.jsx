@@ -20,7 +20,16 @@ const ModalDiv = styled.div`
 `;
 
 const Modal = (props) => {
-  return <ModalDiv>{props.children}</ModalDiv>;
+  return (
+    <ModalDiv
+      style={{
+        transform: props.show ? "translateY(0)" : "translateY(-100vh",
+        opacity: props.show ? "1" : "0",
+      }}
+    >
+      {props.children}
+    </ModalDiv>
+  );
 };
 
 export default Modal;

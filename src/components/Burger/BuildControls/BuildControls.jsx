@@ -76,7 +76,9 @@ const BuildControls = (props) => {
           />
         );
       })}
-      <OrderButton disabled={!props.isPurchasable}>ORDER NOW</OrderButton>
+      <OrderButton onClick={props.order} disabled={!props.isPurchasable}>
+        ORDER NOW
+      </OrderButton>
     </StyledDiv>
   );
 };

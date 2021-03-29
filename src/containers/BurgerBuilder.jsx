@@ -20,6 +20,8 @@ const BurgerBuilder = (props) => {
 
   const [purchasable, setPurchaseable] = useState(false);
 
+  const [completeOrder, setCompleteOrder] = useState(false);
+
   const updatePurchaseStatus = (ingredients) => {
     const total = Object.keys(ingredients)
       .map((ingredient) => {
@@ -31,6 +33,10 @@ const BurgerBuilder = (props) => {
 
     setPurchaseable(total > 0);
     console.log(total);
+  };
+
+  const updateOrderStatus = () => {
+    setCompleteOrder(!completeOrder);
   };
 
   const addIngredientHandler = (type) => {
@@ -71,7 +77,7 @@ const BurgerBuilder = (props) => {
   return (
     <Fragment>
       <Burger ingredients={burger.ingredients} />
-      <Modal>
+      <Modal show={completeOrder}>
         <OrderSummary ingredients={burger.ingredients} />
       </Modal>
       <BuildControls
@@ -80,6 +86,7 @@ const BurgerBuilder = (props) => {
         disabledInfo={disabledButtonInfo}
         totalPrice={totalPrice}
         isPurchasable={purchasable}
+        order={updateOrderStatus}
       />
     </Fragment>
   );
