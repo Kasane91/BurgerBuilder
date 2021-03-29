@@ -24,7 +24,14 @@ const BuildControls = (props) => {
   return (
     <StyledDiv>
       {controls.map((control) => {
-        return <BuildControl key={control.label} label={control.label} />;
+        return (
+          <BuildControl
+            key={control.label}
+            label={control.label}
+            added={() => props.onAdd(control.type)}
+            removed={() => props.onRemove(control.type)}
+          />
+        );
       })}
     </StyledDiv>
   );
