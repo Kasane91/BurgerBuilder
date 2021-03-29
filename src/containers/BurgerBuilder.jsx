@@ -82,7 +82,7 @@ const BurgerBuilder = (props) => {
     <Fragment>
       <Burger ingredients={burger.ingredients} />
       <Modal show={completeOrder} handleCancelOrder={cancelOrder}>
-        <OrderSummary ingredients={burger.ingredients} />
+        <OrderSummary clicked={cancelOrder} ingredients={burger.ingredients} />
       </Modal>
       <BuildControls
         onAdd={addIngredientHandler}

@@ -1,4 +1,6 @@
 import React from "react";
+import styled from "styled-components";
+import CheckoutButton from "../../UI/Buttons/Button";
 
 const OrderSummary = (props) => {
   const ingredientList = Object.keys(props.ingredients).map((ingredient) => {
@@ -12,9 +14,15 @@ const OrderSummary = (props) => {
     <div>
       <h3>Your Order</h3>
       <ul>{ingredientList}</ul>
-      <p>Continue to checkout?</p>
-      <button>CANCEL</button>
-      <button>CONTINUE</button>
+      <div>
+        <p>Continue to checkout?</p>
+        <CheckoutButton clicked={props.clicked} type="danger">
+          CANCEL
+        </CheckoutButton>
+        <CheckoutButton clicked={props.clicked} type="">
+          CONTINUE
+        </CheckoutButton>
+      </div>
     </div>
   );
 };
