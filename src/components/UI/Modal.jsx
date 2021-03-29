@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-ModalDiv = styled.div`
+const ModalDiv = styled.div`
   position: fixed;
   z-index: 500;
   background-color: white;
