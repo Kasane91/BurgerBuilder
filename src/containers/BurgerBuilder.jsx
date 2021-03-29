@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from "react";
 import Burger from "../components/Burger/Burger";
+import BuildControls from "../components/Burger/BuildControls/BuildControls";
 
 const BurgerBuilder = (props) => {
   const [burger, setBurger] = useState({
@@ -9,7 +10,7 @@ const BurgerBuilder = (props) => {
   return (
     <Fragment>
       <Burger ingredients={burger.ingredients} />
-      <div>Burger Controls</div>
+      <BuildControls />
     </Fragment>
   );
 };
