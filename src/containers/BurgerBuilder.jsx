@@ -1,6 +1,8 @@
 import React, { Fragment, useState } from "react";
 import Burger from "../components/Burger/Burger";
 import BuildControls from "../components/Burger/BuildControls/BuildControls";
+import Modal from "../components/UI/Modal";
+import OrderSummary from "../components/Burger/OrderSummary/OrderSummary";
 
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -69,6 +71,9 @@ const BurgerBuilder = (props) => {
   return (
     <Fragment>
       <Burger ingredients={burger.ingredients} />
+      <Modal>
+        <OrderSummary />
+      </Modal>
       <BuildControls
         onAdd={addIngredientHandler}
         onRemove={removeIngredientHandler}
