@@ -15,6 +15,7 @@ const ImgDiv = styled.div`
 
   &.SideDrawer {
     height: 11%;
+    margin-bottom: 32px;
   }
 `;
 

@@ -22,7 +22,7 @@ const ToolbarHeader = styled.header`
 const NewNav = styled.nav`
   height: 100%;
 
-  @media (max-width: 500px) {
+  @media (max-width: 499px) {
     display: none;
   }
 `;
