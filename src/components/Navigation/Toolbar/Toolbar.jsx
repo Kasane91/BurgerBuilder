@@ -21,6 +21,10 @@ const ToolbarHeader = styled.header`
 
 const NewNav = styled.nav`
   height: 100%;
+
+  @media (max-width: 500px) {
+    display: none;
+  }
 `;
 
 const Toolbar = (props) => {
