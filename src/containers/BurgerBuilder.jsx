@@ -43,6 +43,10 @@ const BurgerBuilder = (props) => {
     setCompleteOrder(false);
   };
 
+  const continueOrder = () => {
+    alert("You have now continued");
+  };
+
   const addIngredientHandler = (type) => {
     const oldValue = burger.ingredients[type];
     const newValue = oldValue + 1;
@@ -82,7 +86,12 @@ const BurgerBuilder = (props) => {
     <Fragment>
       <Burger ingredients={burger.ingredients} />
       <Modal show={completeOrder} handleCancelOrder={cancelOrder}>
-        <OrderSummary clicked={cancelOrder} ingredients={burger.ingredients} />
+        <OrderSummary
+          clickedContinue={continueOrder}
+          clickedCancel={cancelOrder}
+          ingredients={burger.ingredients}
+          totalPrice={totalPrice}
+        />
       </Modal>
       <BuildControls
         onAdd={addIngredientHandler}
