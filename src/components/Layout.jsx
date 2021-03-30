@@ -14,9 +14,15 @@ const Layout = (props) => {
     setShowSideDrawer(false);
   };
 
+  const toggleSideDrawerHandler = () => {
+    setShowSideDrawer((prevState) => {
+      return !prevState;
+    });
+  };
+
   return (
     <Fragment>
-      <Toolbar />
+      <Toolbar clicked={toggleSideDrawerHandler} />
       <SideDrawer
         showBackdrop={showSideDrawer}
         closed={sideDrawerClosedHandler}

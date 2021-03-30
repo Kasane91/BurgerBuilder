@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Logo from "../../Logo/Logo";
+import ToggleButton from "../Sidedrawer/ToggleButton";
 
 import NavigationItems from "../NavigationItems/NavigationItems";
 
@@ -30,7 +31,7 @@ const NewNav = styled.nav`
 const Toolbar = (props) => {
   return (
     <ToolbarHeader>
-      <div>MENU</div>
+      <ToggleButton clicked={props.clicked} />
       <Logo className="Toolbar" />
       <NewNav>
         <NavigationItems />
