@@ -5,9 +5,17 @@ import styled from "styled-components";
 const ImgDiv = styled.div`
   background-color: white;
   padding: 8px;
-  height: 80%;
+  height: 100%;
   box-sizing: border-box;
   border-radius: 5px;
+
+  &.Toolbar {
+    height: 80%;
+  }
+
+  &.SideDrawer {
+    height: 11%;
+  }
 `;
 
 const StyledImg = styled.img`
@@ -16,7 +24,7 @@ const StyledImg = styled.img`
 
 const Logo = (props) => {
   return (
-    <ImgDiv>
+    <ImgDiv className={props.className}>
       <StyledImg src={burgerLogo} alt="burger_logo_png" />
     </ImgDiv>
   );

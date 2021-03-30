@@ -27,7 +27,7 @@ const Toolbar = (props) => {
   return (
     <ToolbarHeader>
       <div>MENU</div>
-      <Logo />
+      <Logo className="Toolbar" />
       <NewNav>
         <NavigationItems />
       </NewNav>
