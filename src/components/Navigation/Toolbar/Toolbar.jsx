@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Logo from "../../Logo/Logo";
 
+import NavigationItems from "../NavigationItems/NavigationItems";
+
 const ToolbarHeader = styled.header`
   height: 56px;
   width: 100%;
@@ -26,7 +28,9 @@ const Toolbar = (props) => {
     <ToolbarHeader>
       <div>MENU</div>
       <Logo />
-      <NewNav>...</NewNav>
+      <NewNav>
+        <NavigationItems />
+      </NewNav>
     </ToolbarHeader>
   );
 };

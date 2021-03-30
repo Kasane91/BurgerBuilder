@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+
 import CheckoutButton from "../../UI/Buttons/Button";
 
 const OrderSummary = (props) => {
