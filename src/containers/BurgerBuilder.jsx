@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import Burger from "../components/Burger/Burger";
 import BuildControls from "../components/Burger/BuildControls/BuildControls";
 import Modal from "../components/UI/Modal";
@@ -15,6 +15,15 @@ const INGREDIENT_PRICES = {
 };
 
 const BurgerBuilder = (props) => {
+  const testingIngredients = {};
+
+  useEffect(() => {
+    axios.get("/ingredients.json").then((response) => {
+      console.log(response);
+      setBurger({ ingredients: response.data });
+    });
+  }, []);
+
   const [burger, setBurger] = useState({
     ingredients: { salad: 0, bacon: 0, meat: 0, cheese: 0 },
   });
