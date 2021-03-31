@@ -15,17 +15,8 @@ const INGREDIENT_PRICES = {
 };
 
 const BurgerBuilder = (props) => {
-  const testingIngredients = {};
-
-  useEffect(() => {
-    axios.get("/ingredients.json").then((response) => {
-      console.log(response);
-      setBurger({ ingredients: response.data });
-    });
-  }, []);
-
   const [burger, setBurger] = useState({
-    ingredients: { salad: 0, bacon: 0, meat: 0, cheese: 0 },
+    ingredients: null,
   });
 
   const [totalPrice, setTotalPrice] = useState(4);
@@ -35,6 +26,12 @@ const BurgerBuilder = (props) => {
   const [completeOrder, setCompleteOrder] = useState(false);
 
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    axios.get("/ingredients.json").then((response) => {
+      setBurger({ ingredients: response.data });
+    });
+  }, []);
 
   const updatePurchaseStatus = (ingredients) => {
     const total = Object.keys(ingredients)
@@ -122,31 +119,45 @@ const BurgerBuilder = (props) => {
   for (let key in disabledButtonInfo) {
     disabledButtonInfo[key] = disabledButtonInfo[key] <= 0;
   }
+  let burgerRender = <Spinner />;
+  let orderRender = null;
+
+  if (burger.ingredients) {
+    burgerRender = (
+      <Fragment>
+        <Burger ingredients={burger.ingredients} />
+        <BuildControls
+          onAdd={addIngredientHandler}
+          onRemove={removeIngredientHandler}
+          disabledInfo={disabledButtonInfo}
+          totalPrice={totalPrice}
+          isPurchasable={purchasable}
+          handlePurchaseOrder={purchaseOrder}
+        />
+      </Fragment>
+    );
+    orderRender = (
+      <Fragment>
+        <OrderSummary
+          clickedContinue={continueOrder}
+          clickedCancel={cancelOrder}
+          ingredients={burger.ingredients}
+          totalPrice={totalPrice}
+        />
+      </Fragment>
+    );
+  }
+
+  if (loading) {
+    orderRender = <Spinner />;
+  }
 
   return (
     <Fragment>
-      <Burger ingredients={burger.ingredients} />
-
       <Modal show={completeOrder} clicked={cancelOrder}>
-        {loading ? (
-          <Spinner />
-        ) : (
-          <OrderSummary
-            clickedContinue={continueOrder}
-            clickedCancel={cancelOrder}
-            ingredients={burger.ingredients}
-            totalPrice={totalPrice}
-          />
-        )}
+        {orderRender}
       </Modal>
-      <BuildControls
-        onAdd={addIngredientHandler}
-        onRemove={removeIngredientHandler}
-        disabledInfo={disabledButtonInfo}
-        totalPrice={totalPrice}
-        isPurchasable={purchasable}
-        handlePurchaseOrder={purchaseOrder}
-      />
+      {burgerRender}
     </Fragment>
   );
 };
