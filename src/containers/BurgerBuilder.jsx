@@ -5,6 +5,7 @@ import Modal from "../components/UI/Modal";
 import OrderSummary from "../components/Burger/OrderSummary/OrderSummary";
 import axios from "../axious-orders";
 import Spinner from "../components/UI/Spinner/Spinner";
+import withErrorHandler from "../containers/withErrorHandler/withErrorHandler";
 
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -48,6 +49,7 @@ const BurgerBuilder = (props) => {
   };
 
   const continueOrder = () => {
+    setLoading(true);
     const order = {
       ingredients: burger.ingredients,
       //Should be calculated server side in a real application
@@ -67,9 +69,13 @@ const BurgerBuilder = (props) => {
       .post("/orders.json", order)
       .then((response) => {
         console.log(response);
+        setLoading(false);
+        setCompleteOrder(false);
       })
       .catch((error) => {
         console.log(error);
+        setLoading(false);
+        setCompleteOrder(false);
       });
   };
 
@@ -111,13 +117,18 @@ const BurgerBuilder = (props) => {
   return (
     <Fragment>
       <Burger ingredients={burger.ingredients} />
-      <Modal show={completeOrder} handleCancelOrder={cancelOrder}>
-        <OrderSummary
-          clickedContinue={continueOrder}
-          clickedCancel={cancelOrder}
-          ingredients={burger.ingredients}
-          totalPrice={totalPrice}
-        />
+
+      <Modal show={completeOrder} clicked={cancelOrder}>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <OrderSummary
+            clickedContinue={continueOrder}
+            clickedCancel={cancelOrder}
+            ingredients={burger.ingredients}
+            totalPrice={totalPrice}
+          />
+        )}
       </Modal>
       <BuildControls
         onAdd={addIngredientHandler}
@@ -131,4 +142,4 @@ const BurgerBuilder = (props) => {
   );
 };
 
-export default BurgerBuilder;
+export default withErrorHandler(BurgerBuilder, axios);

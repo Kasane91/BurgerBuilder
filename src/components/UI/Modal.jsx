@@ -23,7 +23,7 @@ const ModalDiv = styled.div`
 const Modal = (props) => {
   return (
     <Fragment>
-      <Backdrop show={props.show} clicked={props.handleCancelOrder} />
+      <Backdrop show={props.show} clicked={props.clicked} />
       <ModalDiv
         style={{
           transform: props.show ? "translateY(0)" : "translateY(-100vh",
