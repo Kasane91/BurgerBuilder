@@ -3,6 +3,7 @@ import Burger from "../components/Burger/Burger";
 import BuildControls from "../components/Burger/BuildControls/BuildControls";
 import Modal from "../components/UI/Modal";
 import OrderSummary from "../components/Burger/OrderSummary/OrderSummary";
+import axios from "../axious-orders";
 
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -44,7 +45,7 @@ const BurgerBuilder = (props) => {
   };
 
   const continueOrder = () => {
-    alert("You have now continued");
+    axios.post("/orders.json");
   };
 
   const addIngredientHandler = (type) => {
