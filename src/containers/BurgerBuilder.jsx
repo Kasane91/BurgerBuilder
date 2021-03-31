@@ -4,6 +4,7 @@ import BuildControls from "../components/Burger/BuildControls/BuildControls";
 import Modal from "../components/UI/Modal";
 import OrderSummary from "../components/Burger/OrderSummary/OrderSummary";
 import axios from "../axious-orders";
+import Spinner from "../components/UI/Spinner/Spinner";
 
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -22,6 +23,8 @@ const BurgerBuilder = (props) => {
   const [purchasable, setPurchaseable] = useState(false);
 
   const [completeOrder, setCompleteOrder] = useState(false);
+
+  const [loading, setLoading] = useState(false);
 
   const updatePurchaseStatus = (ingredients) => {
     const total = Object.keys(ingredients)
@@ -45,7 +48,29 @@ const BurgerBuilder = (props) => {
   };
 
   const continueOrder = () => {
-    axios.post("/orders.json");
+    const order = {
+      ingredients: burger.ingredients,
+      //Should be calculated server side in a real application
+      price: totalPrice,
+      customer: {
+        name: "Sondre Søråsdekkan",
+        address: {
+          street: "Test street 1",
+          zipCode: "0875",
+          country: "Norway",
+        },
+        email: "test@gmail.com",
+      },
+      deliveryMethod: "ASAP",
+    };
+    axios
+      .post("/orders.json", order)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const addIngredientHandler = (type) => {
