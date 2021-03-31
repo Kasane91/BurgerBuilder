@@ -8,7 +8,7 @@ const StyledMain = styled.main`
 `;
 
 const Layout = (props) => {
-  const [showSideDrawer, setShowSideDrawer] = useState(true);
+  const [showSideDrawer, setShowSideDrawer] = useState(false);
 
   const sideDrawerClosedHandler = () => {
     setShowSideDrawer(false);
