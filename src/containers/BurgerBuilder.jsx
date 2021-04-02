@@ -27,10 +27,17 @@ const BurgerBuilder = (props) => {
 
   const [loading, setLoading] = useState(false);
 
+  const [error, setError] = useState(false);
+
   useEffect(() => {
-    axios.get("/ingredients.json").then((response) => {
-      setBurger({ ingredients: response.data });
-    });
+    axios
+      .get("/ingredients.json")
+      .then((response) => {
+        setBurger({ ingredients: response.data });
+      })
+      .catch((err) => {
+        setError(err);
+      });
   }, []);
 
   const updatePurchaseStatus = (ingredients) => {
@@ -119,7 +126,7 @@ const BurgerBuilder = (props) => {
   for (let key in disabledButtonInfo) {
     disabledButtonInfo[key] = disabledButtonInfo[key] <= 0;
   }
-  let burgerRender = <Spinner />;
+  let burgerRender = error ? <p>Ingredients can't be loaded!</p> : <Spinner />;
   let orderRender = null;
 
   if (burger.ingredients) {

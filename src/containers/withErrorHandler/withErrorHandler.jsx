@@ -5,16 +5,24 @@ const withErrorHandler = (WrappedComponent, axios) => {
   return (props) => {
     const [error, setError] = useState(null);
     useEffect(() => {
-      axios.interceptors.request.use((request) => {
+      const reqInterceptor = axios.interceptors.request.use((request) => {
         setError(null);
         return request;
       });
-      axios.interceptors.response.use(
-        (res) => res,
+
+      const resInterceptor = axios.interceptors.response.use(
+        (res) => {
+          console.log("Working");
+          return res;
+        },
         (err) => {
           setError(err);
         }
       );
+      return function cleanup() {
+        axios.interceptors.request.eject(reqInterceptor);
+        axios.interceptors.response.eject(resInterceptor);
+      };
     }, []);
 
     const errorConfirmedHandler = () => {
