@@ -63,33 +63,7 @@ const BurgerBuilder = (props) => {
 
   const continueOrder = () => {
     setLoading(true);
-    // const order = {
-    //   ingredients: burger.ingredients,
-    //   //Should be calculated server side in a real application
-    //   price: totalPrice,
-    //   customer: {
-    //     name: "Sondre Søråsdekkan",
-    //     address: {
-    //       street: "Test street 1",
-    //       zipCode: "0875",
-    //       country: "Norway",
-    //     },
-    //     email: "test@gmail.com",
-    //   },
-    //   deliveryMethod: "ASAP",
-    // };
-    // axios
-    //   .post("/orders.json", order)
-    //   .then((response) => {
-    //     console.log(response);
-    //     setLoading(false);
-    //     setCompleteOrder(false);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //     setLoading(false);
-    //     setCompleteOrder(false);
-    //   });
+
     const queryParams = [];
     for (let ingredient in burger.ingredients) {
       queryParams.push(
@@ -98,6 +72,7 @@ const BurgerBuilder = (props) => {
           encodeURIComponent(burger.ingredients[ingredient])
       );
     }
+    queryParams.push("totalPrice=" + totalPrice);
     const queryString = queryParams.join("&");
     props.history.push({ pathname: "/checkout", search: "?" + queryString });
   };

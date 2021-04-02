@@ -1,16 +1,25 @@
 import React, { Fragment, useState, useEffect } from "react";
 import CheckoutSummary from "../../components/Order/CheckoutSummary";
+import { Route } from "react-router-dom";
+import ContactData from "./ContactData/ContactData";
 
 const Checkout = (props) => {
   const [ingredients, setIngredients] = useState({});
+  const [price, setPrice] = useState(0);
 
   useEffect(() => {
     const query = new URLSearchParams(props.location.search);
     let burgerIngredients = {};
+    let totalPrice = 0;
     for (let instance of query.entries()) {
-      burgerIngredients[instance[0]] = instance[1];
+      if (instance[0] === "totalPrice") {
+        setPrice(instance[1]);
+      } else {
+        burgerIngredients[instance[0]] = Number(instance[1]);
+      }
     }
     setIngredients(burgerIngredients);
+    console.log(burgerIngredients);
   }, []);
 
   const onCheckoutCancel = () => {
@@ -28,6 +37,12 @@ const Checkout = (props) => {
         onCheckoutPurchase={onCheckoutPurchase}
         ingredients={ingredients}
       ></CheckoutSummary>
+      <Route
+        path={props.match.path + "/contact-data"}
+        render={() => (
+          <ContactData ingredients={ingredients} totalPrice={price} />
+        )}
+      />
     </Fragment>
   );
 };
