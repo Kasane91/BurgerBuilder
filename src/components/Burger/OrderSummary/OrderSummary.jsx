@@ -22,7 +22,7 @@ const OrderSummary = (props) => {
         <CheckoutButton clicked={props.clickedCancel} type="danger">
           CANCEL
         </CheckoutButton>
-        <CheckoutButton clicked={props.clickedContinue} type="">
+        <CheckoutButton clicked={props.clickedContinue} type="primary">
           CONTINUE
         </CheckoutButton>
       </div>

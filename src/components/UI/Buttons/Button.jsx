@@ -10,18 +10,17 @@ const StyledButton = styled.button`
   padding: 10px;
   margin: 10px;
   font-weight: bold;
-  color: ${(props) => {
-    if (props.type === "danger") {
-      return "#944317";
-    } else {
-      return "#5C9210";
-    }
-  }};
+  &.danger {
+    color: #944317;
+  }
+  &.primary {
+    color: #5c9210;
+  }
 `;
 
 const CheckoutButton = (props) => {
   return (
-    <StyledButton type={props.type} onClick={props.clicked}>
+    <StyledButton className={props.type} onClick={props.clicked}>
       {props.children}
     </StyledButton>
   );
