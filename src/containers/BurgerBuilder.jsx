@@ -33,6 +33,7 @@ const BurgerBuilder = (props) => {
     axios
       .get("/ingredients.json")
       .then((response) => {
+        console.log(props);
         setBurger({ ingredients: response.data });
       })
       .catch((err) => {
@@ -50,7 +51,6 @@ const BurgerBuilder = (props) => {
       }, 0);
 
     setPurchaseable(total > 0);
-    console.log(total);
   };
 
   const purchaseOrder = () => {
@@ -63,33 +63,43 @@ const BurgerBuilder = (props) => {
 
   const continueOrder = () => {
     setLoading(true);
-    const order = {
-      ingredients: burger.ingredients,
-      //Should be calculated server side in a real application
-      price: totalPrice,
-      customer: {
-        name: "Sondre Søråsdekkan",
-        address: {
-          street: "Test street 1",
-          zipCode: "0875",
-          country: "Norway",
-        },
-        email: "test@gmail.com",
-      },
-      deliveryMethod: "ASAP",
-    };
-    axios
-      .post("/orders.json", order)
-      .then((response) => {
-        console.log(response);
-        setLoading(false);
-        setCompleteOrder(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-        setCompleteOrder(false);
-      });
+    // const order = {
+    //   ingredients: burger.ingredients,
+    //   //Should be calculated server side in a real application
+    //   price: totalPrice,
+    //   customer: {
+    //     name: "Sondre Søråsdekkan",
+    //     address: {
+    //       street: "Test street 1",
+    //       zipCode: "0875",
+    //       country: "Norway",
+    //     },
+    //     email: "test@gmail.com",
+    //   },
+    //   deliveryMethod: "ASAP",
+    // };
+    // axios
+    //   .post("/orders.json", order)
+    //   .then((response) => {
+    //     console.log(response);
+    //     setLoading(false);
+    //     setCompleteOrder(false);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     setLoading(false);
+    //     setCompleteOrder(false);
+    //   });
+    const queryParams = [];
+    for (let ingredient in burger.ingredients) {
+      queryParams.push(
+        encodeURIComponent(ingredient) +
+          "=" +
+          encodeURIComponent(burger.ingredients[ingredient])
+      );
+    }
+    const queryString = queryParams.join("&");
+    props.history.push({ pathname: "/checkout", search: "?" + queryString });
   };
 
   const addIngredientHandler = (type) => {
