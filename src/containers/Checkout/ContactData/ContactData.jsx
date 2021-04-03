@@ -31,6 +31,11 @@ const ContactData = (props) => {
         placeholder: "Your Name Here",
       },
       value: "",
+      validation: {
+        required: true,
+      },
+      valid: false,
+      touched: false,
     },
     email: {
       elementType: "input",
@@ -39,6 +44,11 @@ const ContactData = (props) => {
         placeholder: "name@address.com",
       },
       value: "",
+      validation: {
+        required: true,
+      },
+      valid: false,
+      touched: false,
     },
 
     street: {
@@ -48,6 +58,11 @@ const ContactData = (props) => {
         placeholder: "Address @ FakeStreet 123",
       },
       value: "",
+      validation: {
+        required: true,
+      },
+      valid: false,
+      touched: false,
     },
     zipCode: {
       elementType: "input",
@@ -56,9 +71,15 @@ const ContactData = (props) => {
         placeholder: "ZIP",
       },
       value: "",
+      validation: {
+        required: true,
+      },
+      valid: false,
+      touched: false,
     },
     deliveryMethod: {
       elementType: "select",
+      valid: true,
       elementConfig: {
         options: [
           {
@@ -75,6 +96,7 @@ const ContactData = (props) => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [formIsValid, setIsValid] = useState(false);
 
   const orderHandler = (event) => {
     event.preventDefault();
@@ -120,11 +142,35 @@ const ContactData = (props) => {
         ...newObjectArray[id],
       };
       updateElement.value = event.target.value;
+      updateElement.valid = checkValidty(
+        updateElement.value,
+        updateElement.validation
+      );
+      updateElement.touched = true;
 
       newObjectArray[id] = updateElement;
+      let formIsValid = true;
+      for (let inputID in newObjectArray) {
+        formIsValid = newObjectArray[inputID].valid && formIsValid;
+        console.log(newObjectArray[inputID].valid);
+      }
+      setIsValid(formIsValid);
 
       return newObjectArray;
     });
+  };
+
+  const checkValidty = (value, rules) => {
+    let isValid = false;
+    if (!rules) {
+      return true;
+    }
+
+    if (rules.required) {
+      isValid = value.trim() !== "";
+    }
+
+    return isValid;
   };
 
   let form = (
@@ -136,13 +182,16 @@ const ContactData = (props) => {
             key={order.id}
             elementConfig={order.config.elementConfig}
             name={order.id}
+            invalid={!order.config.valid}
+            validationRequired={order.config.validation}
             value={order.config.value}
             changed={handleChange}
+            touched={order.config.touched}
           />
         );
       })}
 
-      <Button type="primary" clicked={orderHandler}>
+      <Button type="primary" disabled={!formIsValid} clicked={orderHandler}>
         ORDER
       </Button>
     </form>

@@ -27,16 +27,28 @@ const InputDiv = styled.div`
       outline: none;
       background-color: #ccc
   }
+
+  .Invalid {
+    border: 1px solid red;
+   
+
+  }
 `;
 
 const Input = (props) => {
+  let activeClassName = "InputElement";
+
+  if (props.invalid && props.validationRequired && props.touched) {
+    activeClassName = "InputElement Invalid";
+  }
+
   let inputElement = null;
   switch (props.elementType) {
     case "input":
       inputElement = (
         <input
           {...props.elementConfig}
-          className="InputElement"
+          className={activeClassName}
           value={props.value}
           onChange={(event) => {
             props.changed(event, props.name);
@@ -50,7 +62,7 @@ const Input = (props) => {
           onChange={(event) => {
             props.changed(event, props.name);
           }}
-          className="InputElement"
+          className={activeClassName}
           value={props.value}
         >
           {props.elementConfig.options.map((option) => {

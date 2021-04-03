@@ -16,11 +16,19 @@ const StyledButton = styled.button`
   &.primary {
     color: #5c9210;
   }
+  &:disabled {
+    color: #ccc;
+    cursor: not-allowed;
+  }
 `;
 
 const CheckoutButton = (props) => {
   return (
-    <StyledButton className={props.type} onClick={props.clicked}>
+    <StyledButton
+      disabled={props.disabled}
+      className={props.type}
+      onClick={props.clicked}
+    >
       {props.children}
     </StyledButton>
   );
