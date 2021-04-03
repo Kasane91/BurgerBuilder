@@ -79,34 +79,18 @@ const ContactData = (props) => {
   const orderHandler = (event) => {
     event.preventDefault();
     setLoading(true);
+    const formData = {};
+    for (let formParam in orderInfo) {
+      formData[formParam] = orderInfo[formParam].value;
+    }
+    console.log(formData);
+
     const order = {
-      ingredients: "props.ingredients",
-      //Should be calculated server side in a real application
-      price: "props.totalPrice",
-      customer: {
-        name: "contactInfo.userName",
-        address: {
-          street: "contactInfo.address.street",
-          zipCode: "contactInfo.address.zipCode",
-        },
-        email: "contactInfo.email",
-      },
-      deliveryMethod: {
-        elementType: "select",
-        elementConfig: {
-          options: [
-            {
-              value: "fastest",
-              displayValue: "Fastest",
-            },
-            {
-              value: "cheapest",
-              displayValue: "Cheapest",
-            },
-          ],
-        },
-      },
+      ingredients: props.ingredients,
+      price: props.totalPrice,
+      orderData: formData,
     };
+
     axios
       .post("/orders.json", order)
       .then((response) => {
@@ -144,7 +128,7 @@ const ContactData = (props) => {
   };
 
   let form = (
-    <form action="/">
+    <form onSubmit={orderHandler}>
       {formElementsArray.map((order) => {
         return (
           <Input
