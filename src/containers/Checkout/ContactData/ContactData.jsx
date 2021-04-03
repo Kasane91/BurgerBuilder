@@ -3,6 +3,7 @@ import Button from "../../../components/UI/Buttons/Button";
 import styled from "styled-components";
 import axios from "../../../axious-orders";
 import Spinner from "../../../components/UI/Spinner/Spinner";
+import Input from "../../../components/UI/Input/Input";
 
 const ContactDataDiv = styled.div`
   margin: 20px auto;
@@ -21,12 +22,54 @@ const ContactDataDiv = styled.div`
 `;
 
 const ContactData = (props) => {
-  const [contactInfo, setContactInfo] = useState({
-    userName: "",
-    email: "",
-    address: {
-      street: "",
-      zipCode: "",
+  const [orderInfo, setOrderInfo] = useState({
+    name: {
+      elementType: "input",
+      elementConfig: {
+        type: "text",
+        placeholder: "Your Name Here",
+      },
+      value: "",
+    },
+    email: {
+      elementType: "input",
+      elementConfig: {
+        type: "email",
+        placeholder: "name@address.com",
+      },
+      value: "",
+    },
+
+    street: {
+      elementType: "input",
+      elementConfig: {
+        type: "text",
+        placeholder: "Address @ FakeStreet 123",
+      },
+      value: "",
+    },
+    zipCode: {
+      elementType: "input",
+      elementConfig: {
+        type: "text",
+        placeholder: "ZIP",
+      },
+      value: "",
+    },
+    deliveryMethod: {
+      elementType: "select",
+      elementConfig: {
+        options: [
+          {
+            value: "fastest",
+            displayValue: "Fastest",
+          },
+          {
+            value: "cheapest",
+            displayValue: "Cheapest",
+          },
+        ],
+      },
     },
   });
 
@@ -36,18 +79,32 @@ const ContactData = (props) => {
     event.preventDefault();
     setLoading(true);
     const order = {
-      ingredients: props.ingredients,
+      ingredients: "props.ingredients",
       //Should be calculated server side in a real application
-      price: props.totalPrice,
+      price: "props.totalPrice",
       customer: {
-        name: contactInfo.userName,
+        name: "contactInfo.userName",
         address: {
-          street: contactInfo.address.street,
-          zipCode: contactInfo.address.zipCode,
+          street: "contactInfo.address.street",
+          zipCode: "contactInfo.address.zipCode",
         },
-        email: contactInfo.email,
+        email: "contactInfo.email",
       },
-      deliveryMethod: "ASAP",
+      deliveryMethod: {
+        elementType: "select",
+        elementConfig: {
+          options: [
+            {
+              value: "fastest",
+              displayValue: "Fastest",
+            },
+            {
+              value: "cheapest",
+              displayValue: "Cheapest",
+            },
+          ],
+        },
+      },
     };
     axios
       .post("/orders.json", order)
@@ -62,12 +119,32 @@ const ContactData = (props) => {
     console.log(props);
   };
 
+  const formElementsArray = [];
+
+  for (let orderParam in orderInfo) {
+    formElementsArray.push({
+      id: orderParam,
+      config: orderInfo[orderParam],
+    });
+  }
+
+  console.log(formElementsArray);
+
   let form = (
     <form action="/">
-      <input name="name" placeholder="Your Name" type="text" />
-      <input type="email" name="email" placeholder="yourname@email.com" />
-      <input type="text" name="street" placeholder="I live here street" />
-      <input type="text" name="zipCode" placeholder="ZipCode" />
+      {/* <Input name="name" placeholder="Your Name" type="text" /> */}
+      {formElementsArray.map((order) => {
+        return (
+          <Input
+            elementType={order.config.elementType}
+            key={order.id}
+            elementConfig={order.config.elementConfig}
+            name={order.id}
+            value={order.config.value}
+          />
+        );
+      })}
+
       <Button type="primary" clicked={orderHandler}>
         ORDER
       </Button>
