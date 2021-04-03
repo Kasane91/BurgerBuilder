@@ -18,9 +18,7 @@ const ListItem = styled.li`
   }
 `;
 
-const activeClassName = "active";
-
-const AnchorTag = styled(NavLink).attrs({ activeClassName })`
+const AnchorTag = styled(NavLink)`
   color: #8f5c2c;
   text-decoration: none;
   width: 100%;
@@ -58,7 +56,11 @@ const AnchorTag = styled(NavLink).attrs({ activeClassName })`
 const NavigationItem = (props) => {
   return (
     <ListItem>
-      <AnchorTag className={props.className} exact to={props.link}>
+      <AnchorTag
+        className={props.className}
+        exact={props.exact}
+        to={props.link}
+      >
         {props.children}
       </AnchorTag>
     </ListItem>

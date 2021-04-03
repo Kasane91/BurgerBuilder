@@ -19,7 +19,9 @@ const NavigationList = styled.ul`
 const NavigationItems = (props) => {
   return (
     <NavigationList>
-      <NavigationItem link="/">Burger Builder</NavigationItem>
+      <NavigationItem exact link="/">
+        Burger Builder
+      </NavigationItem>
       <NavigationItem link="/orders">Orders</NavigationItem>
     </NavigationList>
   );
