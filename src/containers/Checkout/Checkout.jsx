@@ -10,7 +10,7 @@ const Checkout = (props) => {
   useEffect(() => {
     const query = new URLSearchParams(props.location.search);
     let burgerIngredients = {};
-    let totalPrice = 0;
+
     for (let instance of query.entries()) {
       if (instance[0] === "totalPrice") {
         setPrice(instance[1]);
@@ -39,8 +39,12 @@ const Checkout = (props) => {
       ></CheckoutSummary>
       <Route
         path={props.match.path + "/contact-data"}
-        render={() => (
-          <ContactData ingredients={ingredients} totalPrice={price} />
+        render={(props) => (
+          <ContactData
+            ingredients={ingredients}
+            totalPrice={price}
+            {...props}
+          />
         )}
       />
     </Fragment>

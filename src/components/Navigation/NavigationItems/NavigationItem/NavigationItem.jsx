@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 const ListItem = styled.li`
@@ -17,7 +18,9 @@ const ListItem = styled.li`
   }
 `;
 
-const AnchorTag = styled.a`
+const activeClassName = "active";
+
+const AnchorTag = styled(NavLink).attrs({ activeClassName })`
   color: #8f5c2c;
   text-decoration: none;
   width: 100%;
@@ -55,7 +58,7 @@ const AnchorTag = styled.a`
 const NavigationItem = (props) => {
   return (
     <ListItem>
-      <AnchorTag className={props.className} href={props.link}>
+      <AnchorTag className={props.className} exact to={props.link}>
         {props.children}
       </AnchorTag>
     </ListItem>

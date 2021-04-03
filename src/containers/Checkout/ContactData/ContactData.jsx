@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Button from "../../../components/UI/Buttons/Button";
 import styled from "styled-components";
 import axios from "../../../axious-orders";
+import Spinner from "../../../components/UI/Spinner/Spinner";
 
 const ContactDataDiv = styled.div`
   margin: 20px auto;
@@ -29,8 +30,11 @@ const ContactData = (props) => {
     },
   });
 
+  const [loading, setLoading] = useState(false);
+
   const orderHandler = (event) => {
     event.preventDefault();
+    setLoading(true);
     const order = {
       ingredients: props.ingredients,
       //Should be calculated server side in a real application
@@ -48,27 +52,32 @@ const ContactData = (props) => {
     axios
       .post("/orders.json", order)
       .then((response) => {
-        console.log(response);
+        setLoading(false);
+        props.history.push("/");
       })
       .catch((error) => {
         console.log(error);
       });
 
-    console.log(props.ingredients);
+    console.log(props);
   };
+
+  let form = (
+    <form action="/">
+      <input name="name" placeholder="Your Name" type="text" />
+      <input type="email" name="email" placeholder="yourname@email.com" />
+      <input type="text" name="street" placeholder="I live here street" />
+      <input type="text" name="zipCode" placeholder="ZipCode" />
+      <Button type="primary" clicked={orderHandler}>
+        ORDER
+      </Button>
+    </form>
+  );
 
   return (
     <ContactDataDiv>
       <h4>Enter your contact data</h4>
-      <form action="/">
-        <input name="name" placeholder="Your Name" type="text" />
-        <input type="email" name="email" placeholder="yourname@email.com" />
-        <input type="text" name="street" placeholder="I live here street" />
-        <input type="text" name="zipCode" placeholder="ZipCode" />
-        <Button type="primary" clicked={orderHandler}>
-          ORDER
-        </Button>
-      </form>
+      {loading ? <Spinner /> : form}
     </ContactDataDiv>
   );
 };

@@ -33,7 +33,6 @@ const BurgerBuilder = (props) => {
     axios
       .get("/ingredients.json")
       .then((response) => {
-        console.log(props);
         setBurger({ ingredients: response.data });
       })
       .catch((err) => {
