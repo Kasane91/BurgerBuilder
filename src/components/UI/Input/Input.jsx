@@ -38,12 +38,21 @@ const Input = (props) => {
           {...props.elementConfig}
           className="InputElement"
           value={props.value}
+          onChange={(event) => {
+            props.changed(event, props.name);
+          }}
         />
       );
       break;
     case "select":
       inputElement = (
-        <select className="InputElement" value={props.value}>
+        <select
+          onChange={(event) => {
+            props.changed(event, props.name);
+          }}
+          className="InputElement"
+          value={props.value}
+        >
           {props.elementConfig.options.map((option) => {
             return (
               <option key={option.value} value={option.value}>

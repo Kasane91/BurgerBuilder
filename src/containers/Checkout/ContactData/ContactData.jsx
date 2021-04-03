@@ -22,6 +22,7 @@ const ContactDataDiv = styled.div`
 `;
 
 const ContactData = (props) => {
+  //@TODO Make a helper function, for real
   const [orderInfo, setOrderInfo] = useState({
     name: {
       elementType: "input",
@@ -128,11 +129,22 @@ const ContactData = (props) => {
     });
   }
 
-  console.log(formElementsArray);
+  const handleChange = (event, id) => {
+    setOrderInfo((preValues) => {
+      const newObjectArray = { ...preValues };
+      const updateElement = {
+        ...newObjectArray[id],
+      };
+      updateElement.value = event.target.value;
+
+      newObjectArray[id] = updateElement;
+
+      return newObjectArray;
+    });
+  };
 
   let form = (
     <form action="/">
-      {/* <Input name="name" placeholder="Your Name" type="text" /> */}
       {formElementsArray.map((order) => {
         return (
           <Input
@@ -141,6 +153,7 @@ const ContactData = (props) => {
             elementConfig={order.config.elementConfig}
             name={order.id}
             value={order.config.value}
+            changed={handleChange}
           />
         );
       })}
