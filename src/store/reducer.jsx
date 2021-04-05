@@ -53,3 +53,32 @@ const Reducer = (state = initialState, action) => {
 };
 
 export default Reducer;
+
+// const addIngredientHandler = (type) => {
+//   const oldValue = burger.ingredients[type];
+//   const newValue = oldValue + 1;
+//   const updatedIngredients = { ...burger };
+//   updatedIngredients.ingredients[type] = newValue;
+//   setBurger(updatedIngredients);
+
+//   setTotalPrice((prevValue) => {
+//     return prevValue + INGREDIENT_PRICES[type];
+//   });
+
+//   updatePurchaseStatus(updatedIngredients.ingredients);
+// };
+
+// const removeIngredientHandler = (type) => {
+//   const oldValue = burger.ingredients[type];
+//   if (oldValue >= 1) {
+//     const newValue = oldValue - 1;
+//     const updatedIngredients = { ...burger };
+//     updatedIngredients.ingredients[type] = newValue;
+//     setBurger(updatedIngredients);
+
+//     setTotalPrice((prevValue) => {
+//       return prevValue - INGREDIENT_PRICES[type];
+//     });
+//     updatePurchaseStatus(updatedIngredients.ingredients);
+//   }
+// };

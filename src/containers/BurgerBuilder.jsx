@@ -14,8 +14,6 @@ const BurgerBuilder = (props) => {
   //   ingredients: null,
   // });
 
-  const [totalPrice, setTotalPrice] = useState(4);
-
   const [purchasable, setPurchaseable] = useState(false);
 
   const [completeOrder, setCompleteOrder] = useState(false);
@@ -36,7 +34,7 @@ const BurgerBuilder = (props) => {
   //   setBurger({ ingredients: props.ingredients });
   // }, []);
 
-  const updatePurchaseStatus = (ingredients) => {
+  const updatePurchaseable = (ingredients) => {
     const total = Object.keys(ingredients)
       .map((ingredient) => {
         return ingredients[ingredient];
@@ -45,7 +43,7 @@ const BurgerBuilder = (props) => {
         return acc + el;
       }, 0);
 
-    setPurchaseable(total > 0);
+    return total > 0;
   };
 
   const purchaseOrder = () => {
@@ -67,39 +65,10 @@ const BurgerBuilder = (props) => {
           encodeURIComponent(props.ingredients[ingredient])
       );
     }
-    queryParams.push("totalPrice=" + totalPrice);
+    queryParams.push("totalPrice=" + props.totalPrice);
     const queryString = queryParams.join("&");
     props.history.push({ pathname: "/checkout", search: "?" + queryString });
   };
-
-  // const addIngredientHandler = (type) => {
-  //   const oldValue = burger.ingredients[type];
-  //   const newValue = oldValue + 1;
-  //   const updatedIngredients = { ...burger };
-  //   updatedIngredients.ingredients[type] = newValue;
-  //   setBurger(updatedIngredients);
-
-  //   setTotalPrice((prevValue) => {
-  //     return prevValue + INGREDIENT_PRICES[type];
-  //   });
-
-  //   updatePurchaseStatus(updatedIngredients.ingredients);
-  // };
-
-  // const removeIngredientHandler = (type) => {
-  //   const oldValue = burger.ingredients[type];
-  //   if (oldValue >= 1) {
-  //     const newValue = oldValue - 1;
-  //     const updatedIngredients = { ...burger };
-  //     updatedIngredients.ingredients[type] = newValue;
-  //     setBurger(updatedIngredients);
-
-  //     setTotalPrice((prevValue) => {
-  //       return prevValue - INGREDIENT_PRICES[type];
-  //     });
-  //     updatePurchaseStatus(updatedIngredients.ingredients);
-  //   }
-  // };
 
   let disabledButtonInfo = { ...props.ingredients };
 
@@ -118,7 +87,7 @@ const BurgerBuilder = (props) => {
           onRemove={props.removeIngredient}
           disabledInfo={disabledButtonInfo}
           totalPrice={props.totalPrice}
-          isPurchasable={purchasable}
+          isPurchasable={updatePurchaseable(props.ingredients)}
           handlePurchaseOrder={purchaseOrder}
         />
       </Fragment>
