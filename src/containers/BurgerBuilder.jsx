@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
+import { connect } from "react-redux";
 import Burger from "../components/Burger/Burger";
 import BuildControls from "../components/Burger/BuildControls/BuildControls";
 import Modal from "../components/UI/Modal";
@@ -30,14 +31,15 @@ const BurgerBuilder = (props) => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    axios
-      .get("/ingredients.json")
-      .then((response) => {
-        setBurger({ ingredients: response.data });
-      })
-      .catch((err) => {
-        setError(err);
-      });
+    // axios
+    //   .get("/ingredients.json")
+    //   .then((response) => {
+    //     setBurger({ ingredients: response.data });
+    //   })
+    //   .catch((err) => {
+    //     setError(err);
+    //   });
+    setBurger({ ingredients: props.ingredients });
   }, []);
 
   const updatePurchaseStatus = (ingredients) => {
@@ -148,9 +150,28 @@ const BurgerBuilder = (props) => {
       <Modal show={completeOrder} clicked={cancelOrder}>
         {orderRender}
       </Modal>
+      <button onClick={props.testFunction}>Hello</button>
       {burgerRender}
     </Fragment>
   );
 };
 
-export default withErrorHandler(BurgerBuilder, axios);
+const mapStateToProps = (state) => {
+  return {
+    ingredients: state.ingredients,
+    totalPrice: state.totalPrice,
+  };
+};
+
+// const builder = ;
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    testFunction: () => dispatch({ type: "TEST", value: "MADEUP" }),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withErrorHandler(BurgerBuilder, axios));
