@@ -14,8 +14,6 @@ const BurgerBuilder = (props) => {
   //   ingredients: null,
   // });
 
-  const [purchasable, setPurchaseable] = useState(false);
-
   const [completeOrder, setCompleteOrder] = useState(false);
 
   const [loading, setLoading] = useState(false);
@@ -57,17 +55,18 @@ const BurgerBuilder = (props) => {
   const continueOrder = () => {
     setLoading(true);
 
-    const queryParams = [];
-    for (let ingredient in props.ingredients) {
-      queryParams.push(
-        encodeURIComponent(ingredient) +
-          "=" +
-          encodeURIComponent(props.ingredients[ingredient])
-      );
-    }
-    queryParams.push("totalPrice=" + props.totalPrice);
-    const queryString = queryParams.join("&");
-    props.history.push({ pathname: "/checkout", search: "?" + queryString });
+    // const queryParams = [];
+    // for (let ingredient in props.ingredients) {
+    //   queryParams.push(
+    //     encodeURIComponent(ingredient) +
+    //       "=" +
+    //       encodeURIComponent(props.ingredients[ingredient])
+    //   );
+    // }
+    // queryParams.push("totalPrice=" + props.totalPrice);
+    // const queryString = queryParams.join("&");
+    // props.history.push({ pathname: "/checkout", search: "?" + queryString });
+    props.history.push("/checkout");
   };
 
   let disabledButtonInfo = { ...props.ingredients };

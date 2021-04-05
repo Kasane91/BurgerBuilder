@@ -4,6 +4,7 @@ import styled from "styled-components";
 import axios from "../../../axious-orders";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Input from "../../../components/UI/Input/Input";
+import { connect } from "react-redux";
 
 const ContactDataDiv = styled.div`
   margin: 20px auto;
@@ -101,6 +102,7 @@ const ContactData = (props) => {
 
   const orderHandler = (event) => {
     event.preventDefault();
+    console.log(props.ingredients);
     setLoading(true);
     const formData = {};
     for (let formParam in orderInfo) {
@@ -153,7 +155,6 @@ const ContactData = (props) => {
       let formIsValid = true;
       for (let inputID in newObjectArray) {
         formIsValid = newObjectArray[inputID].valid && formIsValid;
-        console.log(newObjectArray[inputID].valid);
       }
       setIsValid(formIsValid);
 
@@ -206,4 +207,11 @@ const ContactData = (props) => {
   );
 };
 
-export default ContactData;
+const mapStateToProps = (state) => {
+  return {
+    ingredients: state.ingredients,
+    totalPrice: state.totalPrice,
+  };
+};
+
+export default connect(mapStateToProps)(ContactData);
