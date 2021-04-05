@@ -80,6 +80,7 @@ const ContactData = (props) => {
     deliveryMethod: {
       elementType: "select",
       valid: true,
+      value: "fastest",
       elementConfig: {
         options: [
           {
