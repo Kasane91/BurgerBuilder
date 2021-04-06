@@ -6,7 +6,7 @@ import Checkout from "./containers/Checkout/Checkout";
 import Orders from "./containers/Orders/Orders";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-import Reducer from "./store/reducer";
+import Reducer from "./store/reducers/reducer";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 
 const store = createStore(Reducer);

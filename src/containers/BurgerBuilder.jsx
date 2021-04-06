@@ -7,7 +7,7 @@ import OrderSummary from "../components/Burger/OrderSummary/OrderSummary";
 import axios from "../axious-orders";
 import Spinner from "../components/UI/Spinner/Spinner";
 import withErrorHandler from "../containers/withErrorHandler/withErrorHandler";
-import * as actionTypes from "../store/actions";
+import * as actionTypes from "../store/actions/actions";
 
 const BurgerBuilder = (props) => {
   // const [burger, setBurger] = useState({
