@@ -7,7 +7,7 @@ import OrderSummary from "../components/Burger/OrderSummary/OrderSummary";
 import axios from "../axious-orders";
 import Spinner from "../components/UI/Spinner/Spinner";
 import withErrorHandler from "../containers/withErrorHandler/withErrorHandler";
-import * as actionTypes from "../store/actions/actionTypes";
+
 import * as burgerActions from "../store/actions/index";
 
 const BurgerBuilder = (props) => {
@@ -44,19 +44,7 @@ const BurgerBuilder = (props) => {
   };
 
   const continueOrder = () => {
-    setLoading(true);
-
-    // const queryParams = [];
-    // for (let ingredient in props.ingredients) {
-    //   queryParams.push(
-    //     encodeURIComponent(ingredient) +
-    //       "=" +
-    //       encodeURIComponent(props.ingredients[ingredient])
-    //   );
-    // }
-    // queryParams.push("totalPrice=" + props.totalPrice);
-    // const queryString = queryParams.join("&");
-    // props.history.push({ pathname: "/checkout", search: "?" + queryString });
+    props.onInitPurchase();
     props.history.push("/checkout");
   };
 
@@ -115,9 +103,9 @@ const BurgerBuilder = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    ingredients: state.ingredients,
-    totalPrice: state.totalPrice,
-    error: state.error,
+    ingredients: state.burgerBuilder.ingredients,
+    totalPrice: state.burgerBuilder.totalPrice,
+    error: state.burgerBuilder.error,
   };
 };
 
@@ -131,6 +119,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onInitIngredients: () => {
       dispatch(burgerActions.initIngredients());
+    },
+    onInitPurchase: () => {
+      dispatch(burgerActions.purchaseInit());
     },
   };
 };

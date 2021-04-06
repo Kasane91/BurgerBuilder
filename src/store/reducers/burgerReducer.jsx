@@ -49,7 +49,12 @@ const Reducer = (state = initialState, action) => {
   }
 
   if (action.type === actionTypes.SET_INGREDIENTS) {
-    return { ...state, ingredients: action.ingredients, error: false };
+    return {
+      ...state,
+      ingredients: action.ingredients,
+      error: false,
+      totalPrice: 4,
+    };
   }
 
   return state;

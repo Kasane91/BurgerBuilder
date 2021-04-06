@@ -1,36 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Order from "./Order/Order";
-
+import { connect } from "react-redux";
 import axios from "../../axious-orders";
 import withErrorHandler from "../withErrorHandler/withErrorHandler";
+import * as actions from "../../store/actions/index";
 
-const Orders = () => {
-  const [ingredients, setIngredients] = useState({});
+const Orders = (props) => {
   const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get("/orders.json")
-      .then((response) => {
-        setLoading(false);
-
-        const fetchedOrders = [];
-        for (let key in response.data) {
-          fetchedOrders.push({
-            ...response.data[key],
-            id: key,
-          });
-        }
-        console.log(fetchedOrders);
-        setOrders(fetchedOrders);
-      })
-      .catch((err) => {
-        setLoading(false);
-      });
+    props.onFetchOrders();
   }, []);
 
-  const orderRender = orders.map((order) => {
+  let orderRender = props.orders.map((order) => {
     return (
       <Order
         ingredients={order.ingredients}
@@ -39,8 +21,27 @@ const Orders = () => {
       />
     );
   });
+  if (props.loading) {
+    orderRender = <p>Currently there are no orders</p>;
+  }
 
   return <div>{orderRender}</div>;
 };
 
-export default withErrorHandler(Orders, axios);
+const mapStateToProps = (state) => {
+  return {
+    orders: state.order.orders,
+    loading: state.order.loading,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onFetchOrders: () => dispatch(actions.fetchedOrders()),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withErrorHandler(Orders, axios));

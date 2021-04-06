@@ -4,15 +4,21 @@ import Layout from "./containers/Layout";
 import BurgerBuilder from "./containers/BurgerBuilder";
 import Checkout from "./containers/Checkout/Checkout";
 import Orders from "./containers/Orders/Orders";
-import { createStore, applyMiddleware, compose } from "redux";
+import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import burgerReducer from "./store/reducers/burgerReducer";
+import orderReducer from "./store/reducers/orderReducer";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+
+const rootReducer = combineReducers({
+  burgerBuilder: burgerReducer,
+  order: orderReducer,
+});
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
-  burgerReducer,
+  rootReducer,
   /* preloadedState, */ composeEnhancers(applyMiddleware(thunk))
 );
 

@@ -75,6 +75,9 @@ const Input = (props) => {
         </select>
       );
       break;
+    default:
+      inputElement = null;
+      break;
   }
   return (
     <InputDiv>
