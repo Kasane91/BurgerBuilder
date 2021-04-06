@@ -48,6 +48,10 @@ const Reducer = (state = initialState, action) => {
     return { ...state, error: true };
   }
 
+  if (action.type === actionTypes.SET_INGREDIENTS) {
+    return { ...state, ingredients: action.ingredients, error: false };
+  }
+
   return state;
 };
 

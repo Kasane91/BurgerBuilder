@@ -15,6 +15,10 @@ const BurgerBuilder = (props) => {
   //   ingredients: null,
   // });
 
+  useEffect(() => {
+    props.onInitIngredients();
+  }, []);
+
   const [completeOrder, setCompleteOrder] = useState(false);
 
   const [loading, setLoading] = useState(false);
@@ -124,6 +128,9 @@ const mapDispatchToProps = (dispatch) => {
     addIngredient: (ingName) => dispatch(burgerActions.addIngredient(ingName)),
     removeIngredient: (ingName) => {
       dispatch(burgerActions.removeIngredient(ingName));
+    },
+    onInitIngredients: () => {
+      dispatch(burgerActions.initIngredients());
     },
   };
 };
