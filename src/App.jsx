@@ -7,31 +7,51 @@ import Orders from "./containers/Orders/Orders";
 
 import { connect } from "react-redux";
 
-import { Route, Switch, withRouter } from "react-router-dom";
+import { Route, Switch, withRouter, Redirect } from "react-router-dom";
 import AuthComponent from "./containers/Auth/Auth";
 
 import Logout from "./containers/Auth/Logout/Logout";
 import * as actions from "./store/actions/index";
 
 function App(props) {
+  const { onTryAutoSignUp } = props;
   useEffect(() => {
-    props.onTryAutoSignUp();
-  }, []);
+    onTryAutoSignUp();
+  }, [onTryAutoSignUp]);
+
+  let routes = (
+    <Switch>
+      <Route path="/" exact component={BurgerBuilder} />,
+      <Route path="/auth" exact component={AuthComponent} />
+      <Redirect to="/" />
+    </Switch>
+  );
+
+  if (props.isAuth) {
+    routes = (
+      <Switch>
+        <Route path="/checkout" component={Checkout} />
+        <Route path="/" exact component={BurgerBuilder} />,
+        <Route path="/auth" exact component={AuthComponent} />
+        <Route path="/orders" exact component={Orders} />
+        <Route path="/logout" component={Logout} />
+        <Redirect to="/" />
+      </Switch>
+    );
+  }
 
   return (
     <div>
-      <Layout>
-        <Switch>
-          <Route path="/checkout" component={Checkout} />
-          <Route path="/auth" exact component={AuthComponent} />
-          <Route path="/orders" exact component={Orders} />
-          <Route path="/logout" component={Logout} />
-          <Route path="/" exact component={BurgerBuilder} />
-        </Switch>
-      </Layout>
+      <Layout>{routes}</Layout>
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    isAuth: state.auth.token !== null,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -39,4 +59,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withRouter(connect(null, mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

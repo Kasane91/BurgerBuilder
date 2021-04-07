@@ -70,6 +70,7 @@ export const fetchedOrders = (token) => {
             id: key,
           });
         }
+        console.log(fetchedOrders);
 
         dispatch(fetchOrdersSuccess(fetchedOrders));
       })

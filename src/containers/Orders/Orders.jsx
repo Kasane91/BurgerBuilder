@@ -10,16 +10,18 @@ const Orders = (props) => {
 
   useEffect(() => {
     onFetchOrders(token);
-  }, [onFetchOrders]);
+  }, [onFetchOrders, token]);
 
   let orderRender = props.orders.map((order) => {
-    return (
-      <Order
-        ingredients={order.ingredients}
-        price={order.price}
-        key={order.id}
-      />
-    );
+    if (order.userId === props.userId) {
+      return (
+        <Order
+          ingredients={order.ingredients}
+          price={order.price}
+          key={order.id}
+        />
+      );
+    }
   });
   if (props.loading) {
     orderRender = <p>Currently there are no orders</p>;
@@ -33,6 +35,7 @@ const mapStateToProps = (state) => {
     orders: state.order.orders,
     loading: state.order.loading,
     token: state.auth.token,
+    userId: state.auth.userId,
   };
 };
 
