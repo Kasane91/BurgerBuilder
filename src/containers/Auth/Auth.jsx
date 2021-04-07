@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Buttons/Button";
 import * as actions from "../../store/actions/index";
+import Spinner from "../../components/UI/Spinner/Spinner";
 
 const AuthDataDiv = styled.div`
   margin: 20px auto;
@@ -51,6 +52,7 @@ const Auth = (props) => {
       valid: false,
       touched: false,
     },
+    isSignUp: false,
   });
   const handleChange = (event, controlName) => {
     setControls((prevState) => {
@@ -99,7 +101,7 @@ const Auth = (props) => {
       config: controls[controlParam],
     });
   }
-  const submitForm = formElementsArray.map((formElement) => {
+  let submitForm = formElementsArray.map((formElement) => {
     return (
       <Input
         elementType={formElement.config.elementType}
@@ -117,14 +119,42 @@ const Auth = (props) => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    props.onAuth(controls.email.value, controls.password.value);
+    console.log(controls.isSignUp);
+    props.onAuth(
+      controls.email.value,
+      controls.password.value,
+      controls.isSignUp
+    );
   };
+
+  const signUpHandler = (event) => {
+    event.preventDefault();
+    setControls((prevState) => {
+      return { ...prevState, isSignUp: !prevState.isSignUp };
+    });
+  };
+
+  if (props.loading) {
+    submitForm = <Spinner />;
+  }
+
+  let errorMessage = null;
+
+  //TODO MAP SOME NICE ERROR MESSAGES?
+  if (props.error) {
+    errorMessage = <p>ERROR : {props.error.message}</p>;
+  }
 
   return (
     <AuthDataDiv>
       <form onSubmit={onSubmitHandler}>
+        {errorMessage}
         {submitForm}
         <Button type="primary">SUBMIT</Button>
+        <Button type="danger" clicked={signUpHandler}>
+          {" "}
+          SWITCH TO {controls.isSignUp ? "SIGN UP" : "SIGN IN"}
+        </Button>
       </form>
     </AuthDataDiv>
   );
@@ -132,14 +162,18 @@ const Auth = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAuth: (email, password) => dispatch(actions.auth(email, password)),
+    onAuth: (email, password, isSignUp) =>
+      dispatch(actions.auth(email, password, isSignUp)),
   };
 };
 
-// const mapStateToProps = (dispatch) => {
-//   return {
-//     auth: state.auth,
-//   };
-// };
+const mapStateToProps = (state) => {
+  return {
+    token: state.auth.token,
+    userId: state.auth.userId,
+    error: state.auth.error,
+    loading: state.auth.loading,
+  };
+};
 
-export default connect(null, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

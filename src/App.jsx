@@ -11,10 +11,12 @@ import burgerReducer from "./store/reducers/burgerReducer";
 import orderReducer from "./store/reducers/orderReducer";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import AuthComponent from "./containers/Auth/Auth";
+import authReducer from "./store/reducers/authReducer";
 
 const rootReducer = combineReducers({
   burgerBuilder: burgerReducer,
   order: orderReducer,
+  auth: authReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
