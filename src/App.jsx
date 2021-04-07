@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./index.css";
 import Layout from "./containers/Layout";
 import BurgerBuilder from "./containers/BurgerBuilder";
 import Checkout from "./containers/Checkout/Checkout";
 import Orders from "./containers/Orders/Orders";
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
-import { Provider } from "react-redux";
+import { Provider, connect } from "react-redux";
 import thunk from "redux-thunk";
 import burgerReducer from "./store/reducers/burgerReducer";
 import orderReducer from "./store/reducers/orderReducer";
@@ -13,6 +13,7 @@ import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import AuthComponent from "./containers/Auth/Auth";
 import authReducer from "./store/reducers/authReducer";
 import Logout from "./containers/Auth/Logout/Logout";
+import * as actions from "./store/actions/index";
 
 const rootReducer = combineReducers({
   burgerBuilder: burgerReducer,
@@ -26,7 +27,13 @@ const store = createStore(
   /* preloadedState, */ composeEnhancers(applyMiddleware(thunk))
 );
 
-function App() {
+function App(props) {
+  const { onTryAutoSignUp } = props;
+
+  useEffect(() => {
+    onTryAutoSignUp();
+  }, []);
+
   return (
     <div>
       <Provider store={store}>
@@ -46,4 +53,10 @@ function App() {
   );
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onTryAutoSignUp: () => dispatch(actions.authCheckState()),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(App);
