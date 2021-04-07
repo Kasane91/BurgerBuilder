@@ -1,9 +1,8 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 import CheckoutSummary from "../../components/Order/CheckoutSummary";
 import { Route, Redirect } from "react-router-dom";
 import ContactData from "./ContactData/ContactData";
 import { connect } from "react-redux";
-import * as actions from "../../store/actions/index";
 
 const Checkout = (props) => {
   const onCheckoutCancel = () => {

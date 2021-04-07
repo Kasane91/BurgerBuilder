@@ -51,7 +51,8 @@ const Auth = (props) => {
     },
   });
   const handleChange = (event, controlName) => {
-    return event.target.value;
+    console.log(event.target.value);
+    console.log(controlName);
   };
 
   const checkValidty = (value, rules) => {

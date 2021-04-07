@@ -14,14 +14,13 @@ const BurgerBuilder = (props) => {
   // const [burger, setBurger] = useState({
   //   ingredients: null,
   // });
+  const { onInitIngredients } = props;
 
   useEffect(() => {
-    props.onInitIngredients();
-  }, []);
+    onInitIngredients();
+  }, [onInitIngredients]);
 
   const [completeOrder, setCompleteOrder] = useState(false);
-
-  const [loading, setLoading] = useState(false);
 
   const updatePurchaseable = (ingredients) => {
     const total = Object.keys(ingredients)
@@ -84,10 +83,6 @@ const BurgerBuilder = (props) => {
         />
       </Fragment>
     );
-  }
-
-  if (loading) {
-    orderRender = <Spinner />;
   }
 
   return (
