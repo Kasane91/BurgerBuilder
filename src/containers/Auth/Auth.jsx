@@ -51,8 +51,20 @@ const Auth = (props) => {
     },
   });
   const handleChange = (event, controlName) => {
-    console.log(event.target.value);
-    console.log(controlName);
+    setControls((prevState) => {
+      return {
+        ...prevState,
+        [controlName]: {
+          ...prevState[controlName],
+          value: event.target.value,
+          valid: checkValidty(
+            event.target.value,
+            prevState[controlName].validation
+          ),
+          touched: true,
+        },
+      };
+    });
   };
 
   const checkValidty = (value, rules) => {
