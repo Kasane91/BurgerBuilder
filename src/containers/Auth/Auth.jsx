@@ -5,6 +5,7 @@ import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Buttons/Button";
 import * as actions from "../../store/actions/index";
 import Spinner from "../../components/UI/Spinner/Spinner";
+import { Redirect } from "react-router-dom";
 
 const AuthDataDiv = styled.div`
   margin: 20px auto;
@@ -145,15 +146,21 @@ const Auth = (props) => {
     errorMessage = <p>ERROR : {props.error.message}</p>;
   }
 
+  let authRedirect = null;
+  if (props.isAuth) {
+    authRedirect = <Redirect to="/" />;
+  }
+
   return (
     <AuthDataDiv>
+      {authRedirect}
       <form onSubmit={onSubmitHandler}>
         {errorMessage}
         {submitForm}
         <Button type="primary">SUBMIT</Button>
         <Button type="danger" clicked={signUpHandler}>
           {" "}
-          SWITCH TO {controls.isSignUp ? "SIGN UP" : "SIGN IN"}
+          SWITCH TO {controls.isSignUp ? "SIGN IN" : "SIGN UP"}
         </Button>
       </form>
     </AuthDataDiv>
@@ -173,6 +180,7 @@ const mapStateToProps = (state) => {
     userId: state.auth.userId,
     error: state.auth.error,
     loading: state.auth.loading,
+    isAuth: state.auth.token !== null,
   };
 };
 

@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import BuildControl from "./BuildControl/BuildControl";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 const controls = [
   { label: "Bacon", type: "bacon" },
@@ -80,10 +82,16 @@ const BuildControls = (props) => {
         onClick={props.handlePurchaseOrder}
         disabled={!props.isPurchasable}
       >
-        ORDER NOW
+        {props.isAuth ? "ORDER NOW" : "SIGN UP TO ORDER"}
       </OrderButton>
     </StyledDiv>
   );
 };
 
-export default BuildControls;
+const mapStateToProps = (state) => {
+  return {
+    isAuth: state.auth.token !== null,
+  };
+};
+
+export default connect(mapStateToProps)(BuildControls);

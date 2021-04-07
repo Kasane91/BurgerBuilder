@@ -34,7 +34,7 @@ const Toolbar = (props) => {
       <ToggleButton clicked={props.clicked} />
       <Logo className="Toolbar" />
       <NewNav>
-        <NavigationItems />
+        <NavigationItems isAuth={props.isAuthenticated} />
       </NewNav>
     </ToolbarHeader>
   );

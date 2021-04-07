@@ -35,7 +35,11 @@ const BurgerBuilder = (props) => {
   };
 
   const purchaseOrder = () => {
-    setCompleteOrder(true);
+    if (props.isAuth) {
+      setCompleteOrder(true);
+    } else {
+      props.history.push("/auth");
+    }
   };
 
   const cancelOrder = () => {
@@ -101,6 +105,7 @@ const mapStateToProps = (state) => {
     ingredients: state.burgerBuilder.ingredients,
     totalPrice: state.burgerBuilder.totalPrice,
     error: state.burgerBuilder.error,
+    isAuth: state.auth.token !== null,
   };
 };
 

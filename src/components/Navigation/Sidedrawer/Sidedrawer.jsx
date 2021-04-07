@@ -39,7 +39,7 @@ const SideDrawer = (props) => {
       <SideDrawerDiv className={props.showBackdrop ? "Open" : "Close"}>
         <Logo className="SideDrawer" />
         <nav>
-          <NavigationItems></NavigationItems>
+          <NavigationItems isAuth={props.isAuthenticated}></NavigationItems>
         </nav>
       </SideDrawerDiv>
     </Fragment>

@@ -12,6 +12,7 @@ import orderReducer from "./store/reducers/orderReducer";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import AuthComponent from "./containers/Auth/Auth";
 import authReducer from "./store/reducers/authReducer";
+import Logout from "./containers/Auth/Logout/Logout";
 
 const rootReducer = combineReducers({
   burgerBuilder: burgerReducer,
@@ -35,6 +36,7 @@ function App() {
               <Route path="/checkout" component={Checkout} />
               <Route path="/auth" exact component={AuthComponent} />
               <Route path="/orders" exact component={Orders} />
+              <Route path="/logout" component={Logout} />
               <Route path="/" exact component={BurgerBuilder} />
             </Switch>
           </Layout>
