@@ -10,6 +10,7 @@ import thunk from "redux-thunk";
 import burgerReducer from "./store/reducers/burgerReducer";
 import orderReducer from "./store/reducers/orderReducer";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import AuthComponent from "./containers/Auth/Auth";
 
 const rootReducer = combineReducers({
   burgerBuilder: burgerReducer,
@@ -30,6 +31,7 @@ function App() {
           <Layout>
             <Switch>
               <Route path="/checkout" component={Checkout} />
+              <Route path="/auth" exact component={AuthComponent} />
               <Route path="/orders" exact component={Orders} />
               <Route path="/" exact component={BurgerBuilder} />
             </Switch>
