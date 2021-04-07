@@ -98,6 +98,8 @@ const ContactData = (props) => {
     },
   });
 
+  console.log(props);
+
   const [formIsValid, setIsValid] = useState(false);
 
   const orderHandler = (event) => {
@@ -115,7 +117,7 @@ const ContactData = (props) => {
       price: props.totalPrice,
       orderData: formData,
     };
-    props.onOrderBurger(order);
+    props.onOrderBurger(order, props.token);
   };
 
   const formElementsArray = [];
@@ -201,13 +203,14 @@ const mapStateToProps = (state) => {
     ingredients: state.burgerBuilder.ingredients,
     totalPrice: state.burgerBuilder.totalPrice,
     loading: state.order.loading,
+    token: state.auth.token,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onOrderBurger: (orderData) =>
-      dispatch(orderActions.purchaseBurger(orderData)),
+    onOrderBurger: (orderData, token) =>
+      dispatch(orderActions.purchaseBurger(orderData, token)),
   };
 };
 

@@ -6,10 +6,10 @@ import withErrorHandler from "../withErrorHandler/withErrorHandler";
 import * as actions from "../../store/actions/index";
 
 const Orders = (props) => {
-  const { onFetchOrders } = props;
+  const { onFetchOrders, token } = props;
 
   useEffect(() => {
-    onFetchOrders();
+    onFetchOrders(token);
   }, [onFetchOrders]);
 
   let orderRender = props.orders.map((order) => {
@@ -32,12 +32,13 @@ const mapStateToProps = (state) => {
   return {
     orders: state.order.orders,
     loading: state.order.loading,
+    token: state.auth.token,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onFetchOrders: () => dispatch(actions.fetchedOrders()),
+    onFetchOrders: (token) => dispatch(actions.fetchedOrders(token)),
   };
 };
 
