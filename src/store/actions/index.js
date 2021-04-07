@@ -12,4 +12,5 @@ export {
   authFail,
   auth,
   logout,
+  setAuthRedirectPath,
 } from "../actions/authActions";

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import Input from "../../components/UI/Input/Input";
@@ -55,6 +55,14 @@ const Auth = (props) => {
     },
     isSignUp: false,
   });
+
+  const { building, authRedirectPath } = props;
+  useEffect(() => {
+    if (!building && authRedirectPath !== "/") {
+      props.onSetAuthRedirectPath();
+    }
+  }, []);
+
   const handleChange = (event, controlName) => {
     setControls((prevState) => {
       return {
@@ -148,7 +156,7 @@ const Auth = (props) => {
 
   let authRedirect = null;
   if (props.isAuth) {
-    authRedirect = <Redirect to="/" />;
+    authRedirect = <Redirect to={props.authRedirectPath} />;
   }
 
   return (
@@ -171,6 +179,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onAuth: (email, password, isSignUp) =>
       dispatch(actions.auth(email, password, isSignUp)),
+    onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath("/")),
   };
 };
 
@@ -181,6 +190,8 @@ const mapStateToProps = (state) => {
     error: state.auth.error,
     loading: state.auth.loading,
     isAuth: state.auth.token !== null,
+    building: state.burgerBuilder.building,
+    authRedirectPath: state.auth.authRedirectPath,
   };
 };
 

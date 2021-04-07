@@ -4,6 +4,7 @@ const initialState = {
   ingredients: null,
   totalPrice: 4,
   error: false,
+  building: false,
 };
 
 const INGREDIENT_PRICES = {
@@ -27,6 +28,7 @@ const Reducer = (state = initialState, action) => {
         [action.ingredientName]: state.ingredients[action.ingredientName] + 1,
       },
       totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+      building: true,
     };
   }
   if (action.type === actionTypes.REMOVE_INGREDIENT) {
@@ -54,6 +56,7 @@ const Reducer = (state = initialState, action) => {
       ingredients: action.ingredients,
       error: false,
       totalPrice: 4,
+      building: false,
     };
   }
 

@@ -38,6 +38,7 @@ const BurgerBuilder = (props) => {
     if (props.isAuth) {
       setCompleteOrder(true);
     } else {
+      props.onSetAuthRedirectPath("/checkout");
       props.history.push("/auth");
     }
   };
@@ -123,6 +124,8 @@ const mapDispatchToProps = (dispatch) => {
     onInitPurchase: () => {
       dispatch(burgerActions.purchaseInit());
     },
+    onSetAuthRedirectPath: (path) =>
+      dispatch(burgerActions.setAuthRedirectPath(path)),
   };
 };
 
