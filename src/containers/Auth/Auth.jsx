@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Buttons/Button";
+import * as actions from "../../store/actions/index";
 
 const AuthDataDiv = styled.div`
   margin: 20px auto;
@@ -113,12 +115,31 @@ const Auth = (props) => {
     );
   });
 
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
+    props.onAuth(controls.email.value, controls.password.value);
+  };
+
   return (
     <AuthDataDiv>
-      {submitForm}
-      <Button type="primary">SUBMIT</Button>
+      <form onSubmit={onSubmitHandler}>
+        {submitForm}
+        <Button type="primary">SUBMIT</Button>
+      </form>
     </AuthDataDiv>
   );
 };
 
-export default Auth;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onAuth: (email, password) => dispatch(actions.auth(email, password)),
+  };
+};
+
+// const mapStateToProps = (dispatch) => {
+//   return {
+//     auth: state.auth,
+//   };
+// };
+
+export default connect(null, mapDispatchToProps)(Auth);
