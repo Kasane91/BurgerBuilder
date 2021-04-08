@@ -7,8 +7,7 @@ const CheckoutDiv = styled.div`
   width: 80%;
   margin: auto;
 
-  @media (min-width: 600px) {
-    width: 100%;
+ 
   }
 `;
 const CheckoutSummmary = (props) => {

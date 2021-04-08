@@ -6,22 +6,20 @@ import withErrorHandler from "../withErrorHandler/withErrorHandler";
 import * as actions from "../../store/actions/index";
 
 const Orders = (props) => {
-  const { onFetchOrders, token } = props;
+  const { onFetchOrders, token, userId } = props;
 
   useEffect(() => {
-    onFetchOrders(token);
+    onFetchOrders(token, userId);
   }, [onFetchOrders, token]);
 
   let orderRender = props.orders.map((order) => {
-    if (order.userId === props.userId) {
-      return (
-        <Order
-          ingredients={order.ingredients}
-          price={order.price}
-          key={order.id}
-        />
-      );
-    }
+    return (
+      <Order
+        ingredients={order.ingredients}
+        price={order.price}
+        key={order.id}
+      />
+    );
   });
   if (props.loading) {
     orderRender = <p>Currently there are no orders</p>;
@@ -41,7 +39,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onFetchOrders: (token) => dispatch(actions.fetchedOrders(token)),
+    onFetchOrders: (token, userId) =>
+      dispatch(actions.fetchedOrders(token, userId)),
   };
 };
 

@@ -36,7 +36,10 @@ const SideDrawer = (props) => {
   return (
     <Fragment>
       <Backdrop show={props.showBackdrop} clicked={props.closed} />
-      <SideDrawerDiv className={props.showBackdrop ? "Open" : "Close"}>
+      <SideDrawerDiv
+        onClick={props.closed}
+        className={props.showBackdrop ? "Open" : "Close"}
+      >
         <Logo className="SideDrawer" />
         <nav>
           <NavigationItems isAuth={props.isAuthenticated}></NavigationItems>
