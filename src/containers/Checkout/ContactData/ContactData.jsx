@@ -48,6 +48,7 @@ const ContactData = (props) => {
       value: "",
       validation: {
         required: true,
+        isEmail: true,
       },
       valid: false,
       touched: false,
@@ -75,6 +76,7 @@ const ContactData = (props) => {
       value: "",
       validation: {
         required: true,
+        validZip: true,
       },
       valid: false,
       touched: false,
@@ -130,25 +132,23 @@ const ContactData = (props) => {
 
   const handleChange = (event, id) => {
     setOrderInfo((preValues) => {
-      const newObjectArray = { ...preValues };
-      const updateElement = {
-        ...newObjectArray[id],
+      const updatedFormData = {
+        ...preValues,
+        [id]: {
+          ...preValues[id],
+          value: event.target.value,
+          valid: checkValidty(event.target.value, preValues[id].validation),
+          touched: true,
+        },
       };
-      updateElement.value = event.target.value;
-      updateElement.valid = checkValidty(
-        updateElement.value,
-        updateElement.validation
-      );
-      updateElement.touched = true;
 
-      newObjectArray[id] = updateElement;
       let formIsValid = true;
-      for (let inputID in newObjectArray) {
-        formIsValid = newObjectArray[inputID].valid && formIsValid;
+      for (let inputID in updatedFormData) {
+        formIsValid = updatedFormData[inputID].valid && formIsValid;
       }
       setIsValid(formIsValid);
 
-      return newObjectArray;
+      return updatedFormData;
     });
   };
 
@@ -160,6 +160,14 @@ const ContactData = (props) => {
 
     if (rules.required) {
       isValid = value.trim() !== "";
+    }
+
+    if (rules.validZip) {
+      isValid = value.length >= 4 && isValid;
+    }
+    if (rules.isEmail) {
+      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+      isValid = pattern.test(value) && isValid;
     }
 
     return isValid;
