@@ -6,6 +6,7 @@ import Spinner from "../../../components/UI/Spinner/Spinner";
 import Input from "../../../components/UI/Input/Input";
 import { connect } from "react-redux";
 import * as orderActions from "../../../store/actions/index";
+import { checkValidity } from "../../../shared/utility";
 
 const ContactDataDiv = styled.div`
   margin: 20px auto;
@@ -104,9 +105,10 @@ const ContactData = (props) => {
 
   const orderHandler = (event) => {
     event.preventDefault();
-    console.log(props.ingredients);
 
     const formData = {};
+
+    //CREATES AN OBJECT FOR ORDER SUBMISSION CONTAINING ALL FORM DATA INPUTS
     for (let formParam in orderInfo) {
       formData[formParam] = orderInfo[formParam].value;
     }
@@ -117,7 +119,7 @@ const ContactData = (props) => {
       orderData: formData,
       userId: props.userId,
     };
-    console.log("ID" + props.userId);
+
     props.onOrderBurger(order, props.token);
   };
 
@@ -137,7 +139,7 @@ const ContactData = (props) => {
         [id]: {
           ...preValues[id],
           value: event.target.value,
-          valid: checkValidty(event.target.value, preValues[id].validation),
+          valid: checkValidity(event.target.value, preValues[id].validation),
           touched: true,
         },
       };
@@ -150,27 +152,6 @@ const ContactData = (props) => {
 
       return updatedFormData;
     });
-  };
-
-  const checkValidty = (value, rules) => {
-    let isValid = false;
-    if (!rules) {
-      return true;
-    }
-
-    if (rules.required) {
-      isValid = value.trim() !== "";
-    }
-
-    if (rules.validZip) {
-      isValid = value.length >= 4 && isValid;
-    }
-    if (rules.isEmail) {
-      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-      isValid = pattern.test(value) && isValid;
-    }
-
-    return isValid;
   };
 
   let form = (

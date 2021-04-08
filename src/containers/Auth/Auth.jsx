@@ -6,6 +6,7 @@ import Button from "../../components/UI/Buttons/Button";
 import * as actions from "../../store/actions/index";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import { Redirect } from "react-router-dom";
+import { checkValidity } from "../../shared/utility";
 
 const AuthDataDiv = styled.div`
   margin: 20px auto;
@@ -70,7 +71,7 @@ const Auth = (props) => {
         [controlName]: {
           ...prevState[controlName],
           value: event.target.value,
-          valid: checkValidty(
+          valid: checkValidity(
             event.target.value,
             prevState[controlName].validation
           ),
@@ -78,28 +79,6 @@ const Auth = (props) => {
         },
       };
     });
-  };
-
-  const checkValidty = (value, rules) => {
-    let isValid = false;
-    if (!rules) {
-      return true;
-    }
-
-    if (rules.required) {
-      isValid = value.trim() !== "";
-    }
-
-    if (rules.minLength) {
-      isValid = value.length > 6 && isValid;
-    }
-
-    if (rules.isEmail) {
-      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-      isValid = pattern.test(value) && isValid;
-    }
-
-    return isValid;
   };
 
   const formElementsArray = [];
@@ -128,7 +107,7 @@ const Auth = (props) => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    console.log(controls.isSignUp);
+
     props.onAuth(
       controls.email.value,
       controls.password.value,
