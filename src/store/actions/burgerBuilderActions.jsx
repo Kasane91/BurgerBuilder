@@ -23,16 +23,8 @@ export const setIngredients = (ingredients) => {
 };
 
 export const initIngredients = () => {
-  return (dispatch) => {
-    axios
-      .get("/ingredients.json")
-      .then((response) => {
-        dispatch(setIngredients(response.data));
-      })
-      .catch((err) => {
-        fetchedIngredientsFailed();
-        console.log(err);
-      });
+  return {
+    type: actionTypes.FETCH_INITIAL_INGREDIENTS,
   };
 };
 

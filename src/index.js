@@ -9,7 +9,7 @@ import orderReducer from "./store/reducers/orderReducer";
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import authReducer from "./store/reducers/authReducer";
 import createSagaMiddleware from "redux-saga";
-import { watchAuth } from "./store/sagas/index";
+import { watchAsync } from "./store/sagas/index";
 
 const rootReducer = combineReducers({
   burgerBuilder: burgerReducer,
@@ -28,7 +28,7 @@ const store = createStore(
   /* preloadedState, */ composeEnhancers(applyMiddleware(thunk, sagaMiddleware))
 );
 
-sagaMiddleware.run(watchAuth);
+sagaMiddleware.run(watchAsync);
 
 ReactDOM.render(
   <React.StrictMode>

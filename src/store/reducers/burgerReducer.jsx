@@ -15,11 +15,6 @@ const INGREDIENT_PRICES = {
 };
 
 const Reducer = (state = initialState, action) => {
-  if (action.type === "TEST") {
-    console.log(action.value);
-    return state;
-  }
-
   if (action.type === actionTypes.ADD_INGREDIENT) {
     return {
       ...state,
