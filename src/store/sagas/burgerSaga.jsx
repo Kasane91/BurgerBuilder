@@ -2,7 +2,7 @@ import { put } from "redux-saga/effects";
 import * as actions from "../actions/index";
 import axios from "../../axious-orders";
 
-export function* getIngredients() {
+export function* getIngredients(action) {
   try {
     const response = yield axios.get("/ingredients.json");
     console.log(response);
