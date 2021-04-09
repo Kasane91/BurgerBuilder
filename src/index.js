@@ -8,6 +8,8 @@ import burgerReducer from "./store/reducers/burgerReducer";
 import orderReducer from "./store/reducers/orderReducer";
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import authReducer from "./store/reducers/authReducer";
+import createSagaMiddleware from "redux-saga";
+import { watchAuth } from "./store/sagas/index";
 
 const rootReducer = combineReducers({
   burgerBuilder: burgerReducer,
@@ -15,14 +17,18 @@ const rootReducer = combineReducers({
   auth: authReducer,
 });
 
+const sagaMiddleware = createSagaMiddleware();
+
 const composeEnhancers =
   process.env.NODE_ENV === "development"
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     : null || compose;
 const store = createStore(
   rootReducer,
-  /* preloadedState, */ composeEnhancers(applyMiddleware(thunk))
+  /* preloadedState, */ composeEnhancers(applyMiddleware(thunk, sagaMiddleware))
 );
+
+sagaMiddleware.run(watchAuth);
 
 ReactDOM.render(
   <React.StrictMode>

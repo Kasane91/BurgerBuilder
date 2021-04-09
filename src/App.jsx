@@ -26,7 +26,7 @@ function App(props) {
         path="/auth"
         exact
         render={() => (
-          <Suspense fallback={Spinner}>
+          <Suspense fallback={<Spinner />}>
             <AuthComponent />
           </Suspense>
         )}
@@ -44,7 +44,7 @@ function App(props) {
           path="/auth"
           exact
           render={() => (
-            <Suspense fallback={Spinner}>
+            <Suspense fallback={<Spinner />}>
               <AuthComponent />
             </Suspense>
           )}

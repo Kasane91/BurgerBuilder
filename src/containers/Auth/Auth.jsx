@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Buttons/Button";
 import * as actions from "../../store/actions/index";
+import * as sagaActions from "../../store/sagas/authSaga";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import { Redirect } from "react-router-dom";
 import { checkValidity } from "../../shared/utility";
